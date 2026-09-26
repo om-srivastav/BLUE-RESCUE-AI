@@ -21,7 +21,7 @@ React/Vite calls FastAPI under `/api`. FastAPI services use SQLite for missions,
 
 ## Run locally
 
-Requires Python 3.11+ and Node.js 20+. From the repository root on Windows:
+Requires Python 3.11+ and Node.js 24.x (verified with 24.14.1). The locked test dependencies require Node 20.19+, 22.13+, or 24+ within their supported release lines. From the repository root on Windows:
 
 ```powershell
 python -m venv .venv

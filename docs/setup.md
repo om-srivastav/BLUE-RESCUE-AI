@@ -1,6 +1,6 @@
 # Setup
 
-Requirements: Python 3.11+ and Node.js 20+.
+Requirements: Python 3.11+ and Node.js 24.x (verified with 24.14.1). The locked jsdom test dependency supports Node `^20.19.0 || ^22.13.0 || >=24.0.0`; early Node 20 releases are insufficient.
 
 From the repository root, create a Python environment and install backend dependencies:
 

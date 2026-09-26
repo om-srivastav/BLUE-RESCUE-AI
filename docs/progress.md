@@ -22,9 +22,15 @@ Backend: 25 tests passed (one upstream Starlette/httpx deprecation warning). Fro
 
 Team handoff: `README.md`, `docs/setup.md`, `docs/architecture.md`, `docs/api.md`, `docs/data-provenance.md`, `docs/limitations.md`, `docs/verification.md`, and `docs/future-development.md` describe the current behavior and extension points. The staging dry run excluded generated databases, caches, build output, virtual environments, and model weights.
 
+## Final repository verification and handoff — 2026-09-26
+
+Reverified the completed foundation on `main` from initial commit `7647e04`: backend 25 tests, frontend 11 tests, lint, typecheck, and production build passed. Live HTTP checks through the configured Vite proxy passed for health, frontend, missions, grid, routes, manual hazard rerouting/resolution, bundled satellite analysis, all five sonar replay assets, heuristic sonar upload, ML unavailable responses, system status, and current-state report. Local providers worked with socket connections blocked; all three external adapters raised `NOT_CONFIGURED` without connecting. The integration run used a disposable SQLite database and upload cache.
+
+Tracked files were reviewed for secrets, local environment files, generated artifacts, debug output, and machine-specific paths; none were found in the commit set. README/setup Node requirements were corrected to match the locked jsdom dependency and the tested Node 24.14.1 runtime. No product code changes were required. The final verification commit is intended for `origin/main` at `github.com/om-srivastav/BLUE-RESCUE-AI`.
+
 ## Milestone history
 
-## Current state: Scaffold Chunk A — Satellite + Sonar Foundation
+## Scaffold Chunk A — Satellite + Sonar Foundation (historical)
 
 **Complete (2026-09-26).** The earlier Chunk 4/5 roadmap in this historical log is superseded by the user-directed scaffold scope. Bundled deterministic fictional satellite before/after PNGs and five synthetic sonar frames with authored annotations are present. Satellite uploads, previews, classical CV change detection, masks, percentages, and regions work offline. Sonar replay, frame controls, metadata/overlays, single image upload, and heuristic unknown-anomaly detection work offline. The satellite and sonar detector interfaces include ML adapters that return structured `MODEL_NOT_CONFIGURED`; no model, external API, or sonar-to-hazard integration was added. Mission navigation links to Dashboard, Satellite, Sonar, Risk / Routing, and a clearly pending Report page. Existing Chunks 1–3 remain in place.
 
@@ -84,4 +90,4 @@ Current limitations: no measured geographic hazard positions, authenticated oper
 
 ## Next
 
-Superseded by the Scaffold Chunk A state at the top of this file.
+Superseded by the completed foundation state at the top of this file.
