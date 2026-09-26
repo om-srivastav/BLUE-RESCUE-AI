@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #e9f5f7; background: #071524; }
+body { margin: 0; min-width: 320px; }
+button, input, textarea, select { font: inherit; }
+
+@media print {
+  @page { size: A4; margin: 15mm; }
+  :root, body { color: #111827; background: #fff; }
+  #root, #root > div, #root > div > div, .report-page { background: #fff !important; color: #111827 !important; min-height: 0 !important; }
+  aside, footer, .app-header, .no-print { display: none !important; }
+  main { max-width: none !important; padding: 0 !important; }
+  .report-page { color: #111827; }
+  .report-page * { background-color: transparent !important; color: #111827 !important; box-shadow: none !important; }
+  .report-page .report-card, .report-page > header, .report-page section { border-color: #cbd5e1 !important; break-inside: avoid; }
+  .report-page .report-grid { display: grid; grid-template-columns: 1fr 1fr; }
+}

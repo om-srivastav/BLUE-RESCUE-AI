@@ -1,0 +1,34 @@
+import { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import { DataSourcesPanel } from '../components/mission/DataSourcesPanel'
+import { ErrorState, Loading } from '../components/common/State'
+import { api, errorMessage } from '../services/api'
+import type { MissionReport } from '../types/report'
+
+function metric(value: number | null | undefined, digits = 2) { return value == null ? 'Not available' : value.toFixed(digits) }
+function item(label: string, value: string | number | null | undefined) { return <div className="flex justify-between gap-4 border-b border-white/10 py-2 text-sm"><dt className="text-slate-400">{label}</dt><dd className="text-right font-medium">{value ?? 'Not available'}</dd></div> }
+
+export function ReportPage() {
+  const id = Number(useParams().id)
+  const [report, setReport] = useState<MissionReport | null>(null)
+  const [error, setError] = useState('')
+  useEffect(() => { api.report(id).then(setReport).catch(e => setError(errorMessage(e))) }, [id])
+  if (error) return <ErrorState message={error} />
+  if (!report) return <Loading label="Building current mission report…" />
+  const { mission, satellite, sonar, hazards, environment, risk, routing } = report
+  return <article className="report-page space-y-6">
+    <div className="no-print flex flex-wrap items-center justify-between gap-3"><Link to={`/missions/${id}`} className="text-aqua">← Mission dashboard</Link><button onClick={() => window.print()} className="rounded-lg bg-aqua px-4 py-2 font-bold text-navy">Print report</button></div>
+    <header className="rounded-xl border border-aqua/20 bg-panel p-6"><p className="text-xs tracking-widest text-aqua">BLUE-RESCUE AI · MISSION REPORT</p><h1 className="mt-2 text-3xl font-bold">{mission.name}</h1><p className="mt-2 text-sm text-slate-400">Generated {new Date(report.generated_at).toLocaleString()} · Current backend state</p><p className="mt-4 text-sm font-semibold text-amber-300">{report.disclaimer}</p></header>
+    <div className="report-grid grid gap-4 md:grid-cols-2">
+      <section className="report-card rounded-xl border border-white/10 bg-panel p-5"><h2 className="text-xl font-bold">Mission</h2><dl className="mt-3">{item('Mode', mission.mode)}{item('Status', mission.status)}{item('Created', new Date(mission.created_at).toLocaleString())}{item('Coordinate status', report.coordinate_status.replaceAll('_', ' '))}{item('Areas of interest', mission.aois.length)}</dl></section>
+      <section className="report-card rounded-xl border border-white/10 bg-panel p-5"><h2 className="text-xl font-bold">Satellite</h2><dl className="mt-3">{item('Source', satellite.source.replaceAll('_', ' '))}{item('Method', satellite.method.replaceAll('_', ' '))}{item('Analysis', satellite.analysis_status.replaceAll('_', ' '))}{item('Changed pixels', satellite.changed_pixels)}{item('Change', satellite.percent_changed == null ? null : `${satellite.percent_changed}%`)}{item('Regions', satellite.region_count)}</dl><p className="mt-3 text-xs text-slate-400">Computed on demand for this report; this does not record a prior operator analysis.</p></section>
+      <section className="report-card rounded-xl border border-white/10 bg-panel p-5"><h2 className="text-xl font-bold">Sonar</h2><dl className="mt-3">{item('Source', sonar.source.replaceAll('_', ' '))}{item('Replay frames', sonar.replay_frames)}{item('Uploaded frame', sonar.uploaded_frame ? 'Available' : 'None')}{item('Method', sonar.detection_method.replaceAll('_', ' '))}{item('Unknown anomalies', sonar.anomaly_count)}{item('ML model', sonar.ml_model_status.replaceAll('_', ' '))}</dl></section>
+      <section className="report-card rounded-xl border border-white/10 bg-panel p-5"><h2 className="text-xl font-bold">Hazards</h2><dl className="mt-3">{item('Total', hazards.total)}{item('Active', hazards.active)}{item('Resolved', hazards.resolved)}{item('Manual', hazards.manual)}{item('Demo annotations', hazards.demo)}</dl></section>
+      <section className="report-card rounded-xl border border-white/10 bg-panel p-5"><h2 className="text-xl font-bold">Environment</h2><dl className="mt-3">{item('Bathymetry', environment.bathymetry_source.replaceAll('_', ' '))}{item('Ocean', environment.ocean_source.replaceAll('_', ' '))}{item('Coordinates', environment.coordinate_system.replaceAll('_', ' '))}{item('Grid', environment.rows == null ? null : `${environment.rows} × ${environment.cols}`)}{item('Cell scale', environment.cell_size_m == null ? null : `${environment.cell_size_m} modeled m`)}</dl>{environment.parameters && <p className="mt-3 text-xs text-slate-400">Modeled minimum depth {environment.parameters.minimum_operational_depth_m} m · wave range {environment.parameters.wave_low_m}–{environment.parameters.wave_high_m} m · current reference {environment.parameters.current_reference_mps} m/s</p>}</section>
+      <section className="report-card rounded-xl border border-white/10 bg-panel p-5"><h2 className="text-xl font-bold">Risk</h2>{risk.available ? <><dl className="mt-3">{item('Navigable cells', risk.navigable_cells)}{item('Mean modeled risk', metric(risk.average_total_risk, 5))}{item('Range', `${metric(risk.minimum_total_risk, 5)}–${metric(risk.maximum_total_risk, 5)}`)}</dl><p className="mt-3 text-xs text-slate-400">Weights: {Object.entries(risk.weights || {}).map(([key, value]) => `${key} ${value}`).join(' · ')}</p></> : <p className="mt-3 text-sm text-slate-400">No local risk grid is available for this mission.</p>}</section>
+    </div>
+    <section className="report-card rounded-xl border border-white/10 bg-panel p-5"><h2 className="text-xl font-bold">Routing</h2>{routing ? <><div className="report-grid mt-3 grid gap-4 md:grid-cols-2"><dl>{item('Shortest distance', `${metric(routing.shortest_route.distance_m)} modeled m`)}{item('Shortest mean risk', metric(routing.shortest_route.average_risk, 5))}{item('Shortest accumulated risk', metric(routing.shortest_route.accumulated_risk, 5))}</dl><dl>{item('Lower-risk distance', `${metric(routing.lower_risk_route.distance_m)} modeled m`)}{item('Lower-risk mean risk', metric(routing.lower_risk_route.average_risk, 5))}{item('Lower-risk accumulated risk', metric(routing.lower_risk_route.accumulated_risk, 5))}</dl></div><p className="mt-4 text-sm">{routing.comparison.explanation}</p><p className="mt-2 text-xs text-slate-400">Calculated {routing.calculated_at ? new Date(routing.calculated_at).toLocaleString() : 'time unavailable'}.</p></> : <p className="mt-3 text-sm text-slate-400">No route has been calculated for this mission.</p>}</section>
+    <DataSourcesPanel status={report.system_status} />
+    <section className="report-card rounded-xl border border-white/10 bg-panel p-5"><h2 className="text-xl font-bold">Limitations</h2><ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-slate-300">{report.limitations.map(text => <li key={text}>{text}</li>)}</ul></section>
+  </article>
+}

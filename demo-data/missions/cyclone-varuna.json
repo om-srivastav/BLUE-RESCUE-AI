@@ -1,0 +1,49 @@
+{
+  "name": "Mission Cyclone Varuna",
+  "source_type": "SIMULATED",
+  "coordinate_system": "SCHEMATIC_GRID_NOT_GEOGRAPHIC",
+  "cell_size_m": 50,
+  "start": {
+    "row": 19,
+    "col": 3
+  },
+  "destination": {
+    "row": 4,
+    "col": 32
+  },
+  "start_name": "Survey Base",
+  "destination_name": "Harbor Entrance",
+  "hazards": [
+    {
+      "id": "Hazard 01",
+      "label": "Possible wreckage",
+      "row": 11,
+      "col": 17,
+      "severity": 1.0,
+      "confidence": 0.91,
+      "radius_cells": 6,
+      "source_type": "DEMO_ANNOTATION"
+    },
+    {
+      "id": "Hazard 02",
+      "label": "Marine debris",
+      "row": 15,
+      "col": 24,
+      "severity": 0.7,
+      "confidence": 0.83,
+      "radius_cells": 4,
+      "source_type": "DEMO_ANNOTATION"
+    },
+    {
+      "id": "Hazard 03",
+      "label": "Unknown anomaly",
+      "row": 8,
+      "col": 26,
+      "severity": 0.65,
+      "confidence": 0.55,
+      "anomaly_score": 0.88,
+      "radius_cells": 4,
+      "source_type": "DEMO_ANNOTATION"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "frames": [
+    {
+      "name": "frame-01.png",
+      "frame_number": 1,
+      "width": 360,
+      "height": 240,
+      "metadata": {
+        "scenario": "Fictional recorded survey replay",
+        "sample_index": 1
+      },
+      "annotations": [
+        {
+          "x": 55,
+          "y": 86,
+          "width": 40,
+          "height": 24,
+          "label": "Synthetic echo annotation",
+          "source_type": "DEMO_ANNOTATION"
+        }
+      ]
+    },
+    {
+      "name": "frame-02.png",
+      "frame_number": 2,
+      "width": 360,
+      "height": 240,
+      "metadata": {
+        "scenario": "Fictional recorded survey replay",
+        "sample_index": 2
+      },
+      "annotations": [
+        {
+          "x": 103,
+          "y": 121,
+          "width": 40,
+          "height": 24,
+          "label": "Synthetic echo annotation",
+          "source_type": "DEMO_ANNOTATION"
+        }
+      ]
+    },
+    {
+      "name": "frame-03.png",
+      "frame_number": 3,
+      "width": 360,
+      "height": 240,
+      "metadata": {
+        "scenario": "Fictional recorded survey replay",
+        "sample_index": 3
+      },
+      "annotations": [
+        {
+          "x": 151,
+          "y": 86,
+          "width": 40,
+          "height": 24,
+          "label": "Synthetic echo annotation",
+          "source_type": "DEMO_ANNOTATION"
+        }
+      ]
+    },
+    {
+      "name": "frame-04.png",
+      "frame_number": 4,
+      "width": 360,
+      "height": 240,
+      "metadata": {
+        "scenario": "Fictional recorded survey replay",
+        "sample_index": 4
+      },
+      "annotations": [
+        {
+          "x": 199,
+          "y": 121,
+          "width": 40,
+          "height": 24,
+          "label": "Synthetic echo annotation",
+          "source_type": "DEMO_ANNOTATION"
+        }
+      ]
+    },
+    {
+      "name": "frame-05.png",
+      "frame_number": 5,
+      "width": 360,
+      "height": 240,
+      "metadata": {
+        "scenario": "Fictional recorded survey replay",
+        "sample_index": 5
+      },
+      "annotations": [
+        {
+          "x": 247,
+          "y": 86,
+          "width": 40,
+          "height": 24,
+          "label": "Synthetic echo annotation",
+          "source_type": "DEMO_ANNOTATION"
+        }
+      ]
+    }
+  ]
+}
