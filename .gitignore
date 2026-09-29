@@ -13,3 +13,13 @@ data-cache/
 backend/data-cache*/
 ml/models/*
 !ml/models/.gitkeep
+# ML local datasets / experiment artifacts
+datasets/
+ml/data/
+ml/runs/
+ml/artifacts/
+
+# Common ML model artifacts
+*.pt
+*.pth
+*.onnx

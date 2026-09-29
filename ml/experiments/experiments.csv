@@ -1,0 +1,1 @@
+experiment_id,date,task,model,dataset_version,split_version,epochs,batch_size,learning_rate,augmentation,precision,recall,f1,iou,dice,map50,map50_95,latency_ms,checkpoint,notes
